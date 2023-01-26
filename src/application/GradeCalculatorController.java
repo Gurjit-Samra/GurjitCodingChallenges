@@ -13,6 +13,9 @@ public class GradeCalculatorController {
     private TextField projectGradeTextField;
     
     @FXML
+    private Label projectErrorLabel;
+    
+    @FXML
     private Label courseGradeLabel;
 
     @FXML
@@ -38,6 +41,7 @@ public class GradeCalculatorController {
     	if (requiredChallengesCompleted < 15){
     		courseGrade += 0;
     		System.out.println("Required Challenges Completed: " + requiredChallengesCompleted + 
+    			" Optional Challenges Completed: " + optionalChallengesCompleted +
         		"/15" + " Course grade so far: " + courseGrade);
     	}
     	else {

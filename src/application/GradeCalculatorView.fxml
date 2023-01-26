@@ -23,7 +23,13 @@
             <Label text="\%" translateX="100.0" translateY="15.0">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </HBox.margin></Label>
+               </HBox.margin>
+             </Label>
+             <Label fx:id="projectErrorLabel"  text="Display for Error Message" translateX="100.0" translateY="15.0">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+             </Label>
          </children>
          <VBox.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
