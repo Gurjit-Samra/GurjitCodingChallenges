@@ -31,7 +31,7 @@ public class GradeCalculatorController {
     	String projectGrade = projectGradeTextField.getText();
   
     	courseGrade = courseGrade + Double.parseDouble(projectGrade) * 0.5;
-    	
+    	System.out.println("hello world");
     	System.out.println("Project Grade entered: " + projectGrade + 
     			" Course grade so far: " + courseGrade);
     	
