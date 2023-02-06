@@ -30,8 +30,7 @@ public class GradeCalculatorController {
     	
     	String projectGrade = projectGradeTextField.getText();
   
-    	courseGrade = courseGrade + Double.parseDouble(projectGrade) * 0.5;
-    	System.out.println("hello world");
+    	courseGrade = courseGrade + Double.parseDouble(projectGrade) * 0.6;
     	System.out.println("Project Grade entered: " + projectGrade + 
     			" Course grade so far: " + courseGrade);
     	
@@ -45,14 +44,14 @@ public class GradeCalculatorController {
     	}
     	else {
     		System.out.println(optionalChallengesCompleted);
-    		courseGrade += (((requiredChallengesCompleted + optionalChallengesCompleted)* 100 ) / 20)*0.25;
+    		courseGrade += (((requiredChallengesCompleted + optionalChallengesCompleted)* 100 ) / 20)*0.6;
     		System.out.println("Required Challenges Completed: " + requiredChallengesCompleted + 
         		"/15" + " Optional Challenges Completed: " + optionalChallengesCompleted + "/5" + " Course grade so far: " + courseGrade);
     	}
     	
     	double quizGrade = quizSlider.getValue();
     	
-    	courseGrade += (quizGrade * 10) * 0.25;
+    	courseGrade += (quizGrade * 10) * 0.40;
     	
     	System.out.println("Quiz Grade entered: " + quizGrade + 
     			" Course grade so far: " + courseGrade);
