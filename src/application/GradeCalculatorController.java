@@ -86,22 +86,16 @@ public class GradeCalculatorController {
     			" Course grade so far: " + courseGrade);
     	
     	// assuming that coding challenges are worth 25% towards course grade
-    	// assuming that 15/15 required coding challenges must be completed in order to get marks
     	int requiredChallengesCompleted = requiredCodingChallengesChoice.getValue();
     	int optionalChallengesCompleted = optionalCodingChallengesChoice.getValue();
     	
-    	if (requiredChallengesCompleted < 15){
-    		courseGrade += 0;
-    		System.out.println("Required Challenges Completed: " + requiredChallengesCompleted + 
-        		"/15" + " Course grade so far: " + courseGrade);
-    	}
-    	else {
-    		System.out.println(optionalChallengesCompleted);
-    		courseGrade += (((requiredChallengesCompleted + optionalChallengesCompleted)* 100) / 20)* (0.25);
-    		System.out.println("Required Challenges Completed: " + requiredChallengesCompleted + 
-        		"/15" + " Optional Challenges Completed: " + optionalChallengesCompleted + "/5" + 
-    			" Course grade so far: " + courseGrade);
-    	}
+    	
+    	courseGrade += (((requiredChallengesCompleted + optionalChallengesCompleted)* 100) / 20)* (0.25);
+    	
+    	System.out.println("Required Challenges Completed: " + requiredChallengesCompleted + 
+        	"/15" + " Optional Challenges Completed: " + optionalChallengesCompleted + "/5" + 
+    		" Course grade so far: " + courseGrade);
+ 
     	// converting value of quiz grade to a floating point
     	// adding to overall course grade with a weight of 25%
     	double quizGrade = quizSlider.getValue();
