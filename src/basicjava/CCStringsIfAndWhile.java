@@ -3,8 +3,13 @@ package basicjava;
 public class CCStringsIfAndWhile {
 
 	public static boolean isDigit(char c) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isDigit = false;
+		 if(Character.isDigit(c)){
+			 isDigit = true;
+		 }else {
+			 isDigit = false;
+		 }
+		return isDigit;
 	}
 
 	public static int count(String string, String string2) {
