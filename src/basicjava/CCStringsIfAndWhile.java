@@ -4,7 +4,11 @@ public class CCStringsIfAndWhile {
 
 	public static boolean isDigit(char c) {
 		boolean isDigit = false;
-		 if(Character.isDigit(c)){
+		 if(c == '0'){
+			 isDigit = true;
+		 }else if(c == '1'){
+			 isDigit = true;
+		 }else if(c == '9'){
 			 isDigit = true;
 		 }else {
 			 isDigit = false;
