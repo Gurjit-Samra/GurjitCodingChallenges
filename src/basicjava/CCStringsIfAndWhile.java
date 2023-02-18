@@ -22,7 +22,6 @@ public class CCStringsIfAndWhile {
 		int occurences = 0; 
 		int lenString2 = string2.length();
 		int lenString1 = string1.length();
-		System.out.println(lenString2);
 		while (indexCountString2 < lenString2) {
 			String charForCompare = (string2.substring(indexCountString2,
 					(indexCountString2 + 1))).toLowerCase();
@@ -44,9 +43,23 @@ public class CCStringsIfAndWhile {
 		return occurences;
 		}
 
-	public static int smallestDigit(int i) {
-		// TODO Auto-generated method stub
-		return 0;
+	public static int smallestDigit(int number) {
+		int lowestDigit = 9;
+		if(number < 0) {
+			number *= -1;
+		}else if (number == 0) {
+			lowestDigit = 0;
+		}
+		int currentNumber = number;
+		
+		while (currentNumber !=0) {
+			int currentDigit = currentNumber % 10;
+			if (currentDigit < lowestDigit) {
+				lowestDigit = currentDigit;
+			}
+			currentNumber = currentNumber / 10;
+		}
+		return lowestDigit;
 	}
 
 }
