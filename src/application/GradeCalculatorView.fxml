@@ -129,7 +129,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
             </ChoiceBox>
-            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#getQuizGrades" text="Enter Quiz Grades" translateY="50.0">
+            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#getQuizGrades" text="Enter Quiz Grades">
          		<VBox.margin>
             		<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          		</VBox.margin>
