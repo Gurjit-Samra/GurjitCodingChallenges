@@ -14,7 +14,8 @@ import javafx.stage.Stage;
 public class GradeCalculatorController {
 	
 	Stage applicationStage;
-	double averageQuizGrade = 0.0;
+	double averageOfRequiredQuizGrade = 0.0;
+	double averageOfOptionalQuizGrade = 0.0;
 
     @FXML
     private ChoiceBox<Integer> requiredCodingChallengesChoice;
@@ -117,48 +118,45 @@ public class GradeCalculatorController {
  
     	// converting value of quiz grade to a floating point
     	// adding to overall course grade with a weight of 25%
-    	double quizGrade = averageQuizGrade;
-    	courseGrade += (quizGrade * 10) * 0.25;
-    	System.out.println("Quiz Grade entered: " + quizGrade + 
-    			" Course grade so far: " + courseGrade);
+    	//double quizGrade = averageQuizGrade;
+    	courseGrade += (averageOfRequiredQuizGrade* 10 * 0.1875) + (averageOfOptionalQuizGrade * 10 * 0.0625);
+    	System.out.println("Quiz Grade entered: " //+ quizGrade + 
+    			+ " Course grade so far: " + courseGrade);
 
     	// Display result of grade calculation to the user
     	courseGradeLabel.setText(String.format("Your Overall Course Grade is: %.2f", courseGrade));
     }
     
-    void calculateQuizGrade(Scene mainScene, ArrayList<TextField> requiredQuizTextFields, ArrayList<TextField> optionalQuizTextFields) {
+    void calculateAvgRequiredQuizGrade(Scene mainScene, ArrayList<TextField> requiredQuizTextFields) {
     	double requiredQuizGrade = 0.0;
-    	double optionalQuizGrade = 0.0;
-    	int numOptionalQuizzes = 0;
-    	double avgOptionalQuizzes = 0.0;
-    	double avgRequiredQuizzes = 0.0;
-    	averageQuizGrade = 0.0;
-    	
-    	if (optionalQuizTextFields.size()< 6) {
-    		numOptionalQuizzes = optionalQuizTextFields.size();
-    	}else {
-    		numOptionalQuizzes = 5;
-    	}
-    	
-    	if (numOptionalQuizzes == 0) {
-    		
-    	}
-    	
-    	int totalQuizzesComplete = 15 + numOptionalQuizzes;
-    	
-    	ArrayList<Double> optionalQuizDoubles = new ArrayList<Double>();
-    	
-    	
-       	for(TextField textfield : optionalQuizTextFields) {
-       		optionalQuizDoubles.add(Double.parseDouble(textfield.getText()));
-       	}
-
+    	averageOfRequiredQuizGrade = 0.0;
     	
     	for(TextField textfield : requiredQuizTextFields) {
         	requiredQuizGrade += Double.parseDouble(textfield.getText());
     	}
     	
-    	if (optionalQuizTextFields.size() < 6) {
+    	if (requiredQuizTextFields.size() != 0) {
+    		averageOfRequiredQuizGrade = requiredQuizGrade / 15;
+    	}
+ 
+    	//(requiredQuizGrade + optionalQuizGrade)/ totalQuizzesComplete;
+    	avgOfRequiredQuizzes.setText("Avg of required quizzes: " + Double.toString(averageOfRequiredQuizGrade) + " /10");
+    	applicationStage.setScene(mainScene);
+    }
+    
+    void calculateAvgOptionalQuizGrade(Scene mainScene, ArrayList<TextField> optionalQuizTextFields) {
+    	double optionalQuizGrade = 0.0;
+    	int numOptionalQuizzes = 5;
+    	averageOfOptionalQuizGrade = 0.0;
+    
+    	
+    	//copying double values of textfields in ArrayList of optionalQuizTextFields into a new ArrayList<double>
+    	ArrayList<Double> optionalQuizDoubles = new ArrayList<Double>();
+       	for(TextField textfield : optionalQuizTextFields) {
+       		optionalQuizDoubles.add(Double.parseDouble(textfield.getText()));
+       	}
+       	
+       	if (optionalQuizTextFields.size() < 6) {
         	for(TextField textfield : optionalQuizTextFields) {
             	optionalQuizGrade += Double.parseDouble(textfield.getText());
         	}
@@ -166,7 +164,6 @@ public class GradeCalculatorController {
     		optionalQuizDoubles.remove(Collections.min(optionalQuizDoubles));
     		for(Double grade : optionalQuizDoubles) {
             	optionalQuizGrade += grade;
-            	
             	}
     	}else if(optionalQuizDoubles.size() > 6) {
         	optionalQuizDoubles.remove(Collections.min(optionalQuizDoubles));
@@ -175,24 +172,15 @@ public class GradeCalculatorController {
             	optionalQuizGrade += grade;
         	}
         }
-    	
-    	if (requiredQuizTextFields.size() != 0) {
-    		avgRequiredQuizzes = requiredQuizGrade / 15;
-    	}
-    	
+       	
     	if (numOptionalQuizzes != 0) {
-        	avgOptionalQuizzes = optionalQuizGrade / numOptionalQuizzes;
-
+    		averageOfOptionalQuizGrade = optionalQuizGrade / numOptionalQuizzes;
     	}
-    	averageQuizGrade = (requiredQuizGrade + optionalQuizGrade) / totalQuizzesComplete;
-    	System.out.print(averageQuizGrade);
-    	//(requiredQuizGrade + optionalQuizGrade)/ totalQuizzesComplete;
-    	avgOfRequiredQuizzes.setText("Avg of required quizzes: " + Double.toString(avgRequiredQuizzes) + " /10");
-    	avgOfOptionalQuizzes.setText("Avg of optional quizzes: " + Double.toString(avgOptionalQuizzes) + " /10");
+    	
+    	
+    	avgOfOptionalQuizzes.setText("Avg of optional quizzes: " + Double.toString(averageOfOptionalQuizGrade) + " /10");
     	applicationStage.setScene(mainScene);
     }
-    
-    ArrayList<TextField> requiredQuizGrades = null;
     
 	@FXML
 	void getQuizGrades(ActionEvent enterQuizGradesEvent) {
@@ -221,15 +209,33 @@ public class GradeCalculatorController {
 			allRows.getChildren().add(quizRow);
 			
 		}
+
+		Button doneButton = new Button("Done");
+		doneButton.setOnAction(doneEvent -> calculateAvgRequiredQuizGrade(mainScene, requiredQuizTextFields));
+		allRows.getChildren().add(doneButton);
+		Scene quizScene = new Scene(allRows);
+		applicationStage.setScene(quizScene);
 		
-		rowCounter = 0;
+	}
+	
+	public void getOptionalQuizGrades(ActionEvent EnterOptionalQuizGrades) {
+		Scene mainScene = applicationStage.getScene();
+		
+		int rowCounter = 0;
 		int numberOfOptionalQuizzes = optionalQuizzesChoiceBox.getValue();
-		System.out.print(numberOfOptionalQuizzes);
+		VBox allRows = new VBox();
 		ArrayList<TextField> optionalQuizTextFields = new ArrayList<TextField>();
 		Label optionalQuizLabel = new Label("Entering Optional Quiz Grades out of 10");
+		Label errorLabel = new Label("Please make sure to select more than one optional quiz completed");
+		
+		
 		if(numberOfOptionalQuizzes != 0) {
 			allRows.getChildren().add(optionalQuizLabel);
+		}else{
+			allRows.getChildren().add(errorLabel);
 		}
+		
+		
 		while (rowCounter < numberOfOptionalQuizzes) {
 			rowCounter ++;
 			HBox quizRow = new HBox();
@@ -238,18 +244,16 @@ public class GradeCalculatorController {
 			TextField quizGradeTextField = new TextField();
 			Label maxMarksLabel = new Label(" /10");
 			optionalQuizTextFields.add(quizGradeTextField);
-			
 			quizRow.getChildren().addAll(quizLabel,quizGradeTextField,maxMarksLabel );			
 			allRows.getChildren().add(quizRow);
 			
 		}
-
+		
 		Button doneButton = new Button("Done");
-		doneButton.setOnAction(doneEvent -> calculateQuizGrade(mainScene, requiredQuizTextFields, optionalQuizTextFields));
+		doneButton.setOnAction(doneEvent -> calculateAvgOptionalQuizGrade(mainScene, optionalQuizTextFields));
 		allRows.getChildren().add(doneButton);
 		Scene quizScene = new Scene(allRows);
 		applicationStage.setScene(quizScene);
-		
 	}
 	
 }
