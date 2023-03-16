@@ -15,12 +15,27 @@ Date arrival;
  * @param departureDate
  * @param arrivalDate
  */
-public Flight(Date departure, Date arrival) {
-	
+public Flight(Date departureDate, Date arrivalDate) {
+	if ((departureDate == null || arrivalDate == null) || 
+			(departureDate==null && arrivalDate==null)){
+		departure = departureDate;
+		arrival = arrivalDate;
+	}else {
+		if (departureDate.before(arrivalDate)){
+			departure = departureDate;
+			arrival = arrivalDate;
+		}else {
+			departure = null;
+			arrival = null;
+			System.out.print("Departure must be before arrival");
+		}
+		
+	}
 }
 
-public Flight(Flight other) {
-	
+public Flight(Flight flightToCopy) {
+	departure = flightToCopy.departure;
+	arrival = flightToCopy.arrival;
 }
 
 long length() {
