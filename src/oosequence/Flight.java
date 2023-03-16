@@ -27,7 +27,6 @@ public Flight(Date departureDate, Date arrivalDate) {
 		}else {
 			departure = null;
 			arrival = null;
-			System.out.print("Departure must be before arrival");
 		}
 		
 	}
@@ -39,8 +38,12 @@ public Flight(Flight flightToCopy) {
 }
 
 long length() {
+	if(departure != null && arrival != null) {
+		return (arrival.getTime() - departure.getTime()) / 60000;
+	}else {
+		return 0;
+	}
 	
-	return 0;
 }
 
 
