@@ -7,8 +7,8 @@ import java.util.Date;
  *
  */
 public class Flight {	
-Date departure;
-Date arrival;
+private Date departure;
+private Date arrival;
 
 /**
  * Javadoc for constructor
@@ -18,32 +18,56 @@ Date arrival;
 public Flight(Date departureDate, Date arrivalDate) {
 	if ((departureDate == null || arrivalDate == null) || 
 			(departureDate==null && arrivalDate==null)){
-		departure = departureDate;
-		arrival = arrivalDate;
+		setDeparture(departureDate);
+		setArrival(arrivalDate);
 	}else {
 		if (departureDate.before(arrivalDate)){
-			departure = departureDate;
-			arrival = arrivalDate;
+			setDeparture(departureDate);
+			setArrival(arrivalDate);
 		}else {
-			departure = null;
-			arrival = null;
+			setDeparture(null);
+			setArrival(null);
 		}
 		
 	}
 }
 
 public Flight(Flight flightToCopy) {
-	departure = flightToCopy.departure;
-	arrival = flightToCopy.arrival;
+	setDeparture(flightToCopy.getDeparture());
+	setArrival(flightToCopy.getArrival());
 }
 
 long length() {
-	if(departure != null && arrival != null) {
-		return (arrival.getTime() - departure.getTime()) / 60000;
+	if(getDeparture() != null && getArrival() != null) {
+		return (getArrival().getTime() - getDeparture().getTime()) / 60000;
 	}else {
 		return 0;
 	}
 	
+}
+
+public Date getDeparture() {
+	return departure;
+}
+
+public void setDeparture(Date departureDate) {
+	if(departureDate != null) {
+		if(departureDate.before(this.arrival)) {
+			this.departure = departureDate;
+		}
+	}
+}
+
+public Date getArrival() {
+	return arrival;
+}
+
+public void setArrival(Date arrivalDate) {
+	if(arrivalDate != null) {
+		if(departure.before(arrivalDate)) {
+			this.arrival = arrivalDate;
+		}
+	}
 }
 
 
