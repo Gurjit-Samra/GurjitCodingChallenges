@@ -60,7 +60,7 @@ public class GradeCalculatorController {
     	
     	projectErrorLabel.setText(projectGrade.setValue(projectGradeTextField.getText()));
     	
-    	Grade requiredQuizzesGrade = new Grade(averageOfRequiredQuizGrade, 10, 0.1875);
+    	Grade requiredQuizzesGrade = new Grade(averageOfRequiredQuizGrade, 100, 0.1875);
     	Grade optionalQuizzesGrade = new Grade(averageOfOptionalQuizGrade,10, 0.0625);
     	Grade codingChallengeGrade = new Grade((requiredCodingChallengesChoice.getValue() + optionalCodingChallengesChoice.getValue()),
     			20, 0.25);
@@ -83,7 +83,7 @@ public class GradeCalculatorController {
     	double requiredQuizGrade = 0.0;
     	boolean noErrors = true;
     	averageOfRequiredQuizGrade = 0.0;
-    	double weightPerQuiz = 1.0 / requiredQuizTextFields.size() ;
+    	double weightPerQuiz = 1.0 / 15 ;
     	
     	for(TextField textfield : requiredQuizTextFields) {
     		Grade quizGrade = new Grade(0, 10,weightPerQuiz);
@@ -97,7 +97,7 @@ public class GradeCalculatorController {
  
     	//(requiredQuizGrade + optionalQuizGrade)/ totalQuizzesComplete;
     	if(noErrors) {
-    		avgOfRequiredQuizzes.setText("Avg of required quizzes: " + Double.toString(averageOfRequiredQuizGrade) + " /10");
+    		avgOfRequiredQuizzes.setText("Avg of required quizzes: " + Double.toString(averageOfRequiredQuizGrade/10) + " /10");
     		applicationStage.setScene(mainScene);
     	}
     	System.out.print(averageOfRequiredQuizGrade);
@@ -107,6 +107,7 @@ public class GradeCalculatorController {
     void calculateAvgOptionalQuizGrade(Scene mainScene, ArrayList<TextField> optionalQuizTextFields) {
     	double optionalQuizGrade = 0.0;
     	int numOptionalQuizzes = 5;
+    	double weightPerQuiz = 1.0 / 5 ;
     	averageOfOptionalQuizGrade = 0.0;
     
     	
