@@ -1,23 +1,39 @@
 package application;
-
+/**
+ * A grade has a value, a maximum possible value (what the grade is out of) and the weight of the grade.
+ * @author Gurjit Samra
+ *
+ */
 public class Grade {
-	//attributes/data
+	//instance variables
 	double value;
 	double weight;
 	int maxValue = 100;
-	
-	Grade(double gradeValue, int maxGradeValue, double weightTowardsCourseGrade){
+	/**
+	 * Constructor creates instance of a grade
+	 * @param gradeValue
+	 * @param maxGradeValue
+	 * @param weightTowardsCourseGrade
+	 */
+	public Grade(double gradeValue, int maxGradeValue, double weightTowardsCourseGrade){
 		value = gradeValue;
 		maxValue = maxGradeValue;
 		weight = weightTowardsCourseGrade; 
 	}
 	
-	
+	/**
+	 * Gives user the weighted percent value
+	 * @return wightedPercentageValue
+	 */
 	double getWeightedPercentageValue() {
 		return value * 100 * weight / maxValue;
 	}
 	
-	//actions
+	/**
+	 * Checks and sets the value variable to a value given by user
+	 * @param valueAsString
+	 * @return errorMessage 
+	 */
 	String setValue(String valueAsString) {
 		String errorMessage = ""; 
 		//Start with assuming no Error

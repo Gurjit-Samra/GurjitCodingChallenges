@@ -61,7 +61,7 @@ public class GradeCalculatorController {
     	projectErrorLabel.setText(projectGrade.setValue(projectGradeTextField.getText()));
     	
     	Grade requiredQuizzesGrade = new Grade(averageOfRequiredQuizGrade, 100, 0.1875);
-    	Grade optionalQuizzesGrade = new Grade(averageOfOptionalQuizGrade,10, 0.0625);
+    	Grade optionalQuizzesGrade = new Grade(averageOfOptionalQuizGrade, 100, 0.0625);
     	Grade codingChallengeGrade = new Grade((requiredCodingChallengesChoice.getValue() + optionalCodingChallengesChoice.getValue()),
     			20, 0.25);
     	
@@ -97,15 +97,18 @@ public class GradeCalculatorController {
  
     	//(requiredQuizGrade + optionalQuizGrade)/ totalQuizzesComplete;
     	if(noErrors) {
-    		avgOfRequiredQuizzes.setText("Avg of required quizzes: " + Double.toString(averageOfRequiredQuizGrade/10) + " /10");
+    		double tempHolder = (averageOfRequiredQuizGrade/10);
+    		avgOfRequiredQuizzes.setText(String.format("Avg of required quizzes: %.2f /10", tempHolder));
     		applicationStage.setScene(mainScene);
     	}
-    	System.out.print(averageOfRequiredQuizGrade);
-
     }
+    
+    private Label optionalQuizGradeErrorLabel;
     
     void calculateAvgOptionalQuizGrade(Scene mainScene, ArrayList<TextField> optionalQuizTextFields) {
     	double optionalQuizGrade = 0.0;
+    	boolean noErrors = true;
+    	boolean allDoubleValue = false;
     	int numOptionalQuizzes = 5;
     	double weightPerQuiz = 1.0 / 5 ;
     	averageOfOptionalQuizGrade = 0.0;
@@ -113,34 +116,50 @@ public class GradeCalculatorController {
     	
     	//copying double values of textfields in ArrayList of optionalQuizTextFields into a new ArrayList<double>
     	ArrayList<Double> optionalQuizDoubles = new ArrayList<Double>();
-       	for(TextField textfield : optionalQuizTextFields) {
-       		optionalQuizDoubles.add(Double.parseDouble(textfield.getText()));
-       	}
-       	
+
+    	
+    		for(TextField textfield : optionalQuizTextFields) {
+           		Grade quizGrade = new Grade(0, 10, weightPerQuiz);
+           		String errorMessage = quizGrade.setValue(textfield.getText());
+           		if (!errorMessage.equals("")) {
+        			noErrors = false;
+        			optionalQuizGradeErrorLabel.setText(errorMessage);
+           		}
+           		if(noErrors) {
+           			optionalQuizDoubles.add(Double.parseDouble(textfield.getText()));
+           		//	averageOfOptionalQuizGrade += quizGrade.getWeightedPercentageValue();
+           		}
+       		}
+    	
+    	
        	if (optionalQuizTextFields.size() < 6) {
-        	for(TextField textfield : optionalQuizTextFields) {
-            	optionalQuizGrade += Double.parseDouble(textfield.getText());
-        	}
-    	}else if (optionalQuizDoubles.size() == 6){
+       		for(Double grade : optionalQuizDoubles) {
+       			Grade quizGrade = new Grade(grade, 10, weightPerQuiz);
+       			averageOfOptionalQuizGrade += quizGrade.getWeightedPercentageValue();
+            	}
+       	}else if (optionalQuizDoubles.size() == 6){
     		optionalQuizDoubles.remove(Collections.min(optionalQuizDoubles));
     		for(Double grade : optionalQuizDoubles) {
-            	optionalQuizGrade += grade;
+       			Grade quizGrade = new Grade(grade, 10, weightPerQuiz);
+       			averageOfOptionalQuizGrade += quizGrade.getWeightedPercentageValue();
             	}
     	}else if(optionalQuizDoubles.size() > 6) {
         	optionalQuizDoubles.remove(Collections.min(optionalQuizDoubles));
         	optionalQuizDoubles.remove(Collections.min(optionalQuizDoubles));
         	for(Double grade : optionalQuizDoubles) {
-            	optionalQuizGrade += grade;
-        	}
+       			Grade quizGrade = new Grade(grade, 10, weightPerQuiz);
+       			averageOfOptionalQuizGrade += quizGrade.getWeightedPercentageValue();
+            	}
         }
        	
-    	if (numOptionalQuizzes != 0) {
-    		averageOfOptionalQuizGrade = optionalQuizGrade / numOptionalQuizzes;
+    //	if (numOptionalQuizzes != 0) {
+    	//	averageOfOptionalQuizGrade = optionalQuizGrade / numOptionalQuizzes;
+    //	}
+    	
+    	if(noErrors) {
+        	avgOfOptionalQuizzes.setText("Avg of optional quizzes: " + Double.toString(averageOfOptionalQuizGrade/10) + " /10");
+        	applicationStage.setScene(mainScene);
     	}
-    	
-    	
-    	avgOfOptionalQuizzes.setText("Avg of optional quizzes: " + Double.toString(averageOfOptionalQuizGrade) + " /10");
-    	applicationStage.setScene(mainScene);
     }
     
 	@FXML
@@ -151,10 +170,10 @@ public class GradeCalculatorController {
 		int rowCounter = 0;
 		VBox allRows = new VBox();
 		ArrayList<TextField> requiredQuizTextFields = new ArrayList<TextField>();
-		Label requiredQuizLabel = new Label("Entering Required Quiz Grades out of 10");
+		Label actionMessage = new Label("Entering Required Quiz Grades out of 10");
 		
 		if(numberOfRequiredQuizzes != 0) {
-			allRows.getChildren().add(requiredQuizLabel);
+			allRows.getChildren().add(actionMessage);
 		}
 		
 		while (rowCounter < numberOfRequiredQuizzes) {
@@ -215,6 +234,8 @@ public class GradeCalculatorController {
 		Button doneButton = new Button("Done");
 		doneButton.setOnAction(doneEvent -> calculateAvgOptionalQuizGrade(mainScene, optionalQuizTextFields));
 		allRows.getChildren().add(doneButton);
+		optionalQuizGradeErrorLabel = new Label();
+		allRows.getChildren().add(optionalQuizGradeErrorLabel);
 		Scene quizScene = new Scene(allRows);
 		applicationStage.setScene(quizScene);
 	}
