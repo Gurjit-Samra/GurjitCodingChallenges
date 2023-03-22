@@ -11,24 +11,22 @@ private Date departure;
 private Date arrival;
 
 /**
- * Javadoc for constructor
+ * Creates an instance of a flight
  * @param departureDate
  * @param arrivalDate
  */
 public Flight(Date departureDate, Date arrivalDate) {
-	if ((departureDate == null || arrivalDate == null) || 
-			(departureDate==null && arrivalDate==null)){
+	boolean bothDatesValid = true;
+	if ((departureDate == null || arrivalDate == null) || (departureDate==null && arrivalDate==null)){
+		bothDatesValid = false;
 		setDeparture(departureDate);
 		setArrival(arrivalDate);
-	}else {
-		if (departureDate.before(arrivalDate)){
+	}
+	if(bothDatesValid) {
+		if (departureDate.before(arrivalDate)) {
 			setDeparture(departureDate);
 			setArrival(arrivalDate);
-		}else {
-			setDeparture(null);
-			setArrival(null);
 		}
-		
 	}
 }
 
@@ -51,9 +49,16 @@ public Date getDeparture() {
 }
 
 public void setDeparture(Date departureDate) {
-	if(departureDate != null) {
-		if(departureDate.before(this.arrival)) {
-			this.departure = departureDate;
+	boolean bothDatesValid = true;
+	
+	if ((departureDate == null || arrival == null) || (departureDate==null && arrival==null)){
+		this.departure = departureDate;
+		bothDatesValid = false;
+	}
+	
+	if(bothDatesValid) {
+		if (departureDate.before(arrival)) {
+			departure = departureDate;
 		}
 	}
 }
@@ -63,9 +68,16 @@ public Date getArrival() {
 }
 
 public void setArrival(Date arrivalDate) {
-	if(arrivalDate != null) {
-		if(departure.before(arrivalDate)) {
-			this.arrival = arrivalDate;
+	boolean bothDatesValid = true;
+	
+	if ((departure == null || arrivalDate == null) || (departure==null && arrivalDate==null)){
+		this.arrival = arrivalDate;
+		bothDatesValid = false;
+	}
+	
+	if(bothDatesValid) {
+		if (this.departure.before(arrivalDate)) {
+			arrival = arrivalDate;
 		}
 	}
 }
