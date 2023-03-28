@@ -51,8 +51,11 @@ public class ItineraryTest {
 			Flight m5 = new Flight(getDate(2019,1,2,4,40),getDate(2019,1,2,6,21));
 			Flight m6 = new Flight(getDate(2019,1,2,9,40),getDate(2019,1,2,13,21));
 			c.addFlight(m1);
+			System.out.println(c.getFlights());
 			c.addFlight(m2);
+			System.out.println(c.getFlights());
 			c.addFlight(m3);
+			System.out.println(c.getFlights());
 			c.addFlight(m4);
 			c.addFlight(m5);
 			c.addFlight(m6);
