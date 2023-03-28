@@ -66,7 +66,24 @@ public String getName() {
 }
 
 public long getTotalLayover() {
-	// TODO Auto-generated method stub
-	return 0;
+	long totalLayover = 0;
+	int index = 0;
+	
+	
+	
+	while( index < flights.size() ) {
+		boolean lastIndex = false;
+		if(index == (flights.size() - 1)) {
+			lastIndex = true;
+		}
+		
+		if(!lastIndex) {
+			long layoverTimeBetweenCurrentAndNextFlight = (flights.get(index+1).getDeparture()).getTime() - (flights.get(index).getArrival()).getTime();
+			totalLayover += layoverTimeBetweenCurrentAndNextFlight/60000;
+			index++;
+		}else {index++;}
+		
+	}
+	return totalLayover;
 }
 }
