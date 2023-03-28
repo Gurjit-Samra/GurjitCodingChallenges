@@ -17,11 +17,20 @@ public Itinerary(String nameEntered) {
 public void addFlight(Flight newFlight) {
 	
 	boolean flightAdded = false;
+	boolean overlappingFlight = false;
 	if(flights.isEmpty()) {
 		flights.add(newFlight);
 	}else{
+		for(Flight f : flights) {
+			if ((f.getDeparture().before(newFlight.getDeparture())) 
+				&& 
+				(newFlight.getDeparture().before(f.getArrival()))) {
+				overlappingFlight = true;
+			}
+		}
+		
 		int index = 0;
-		while((index < flights.size()) && (!flightAdded)) {
+		while((index < flights.size()) && (!flightAdded && !overlappingFlight)) {
 			boolean lastIndex = false;
 			if(index == (flights.size() - 1)) {
 				lastIndex = true;
