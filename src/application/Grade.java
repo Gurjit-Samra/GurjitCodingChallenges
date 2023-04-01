@@ -59,7 +59,7 @@ public class Grade {
 	 * Gives user the weighted percent value
 	 * @return wightedPercentageValue
 	 */
-	double getWeightedPercentageValue() {
+	double getWeightedPercentageGrade() {
 		return value * 100 * weight / maxValue;
 	}
 	/**

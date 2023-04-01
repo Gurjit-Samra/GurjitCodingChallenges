@@ -61,13 +61,13 @@ public class GradeCalculatorController {
     	
     	try {
     		Grade projectGrade = new Grade(projectGradeTextField.getText(), 100, .5);
-    		courseGrade += projectGrade.getWeightedPercentageValue();
+    		courseGrade += projectGrade.getWeightedPercentageGrade();
         	System.out.println("Project Grade entered: " + projectGrade.value + 
         			" Course grade so far: " + courseGrade);
     	}catch(InvalidGradeException ige){
     		projectErrorLabel.setText(ige.getMessage());
     		Grade projectGrade = new Grade(0, 100, .5);
-    		courseGrade += projectGrade.getWeightedPercentageValue();
+    		courseGrade += projectGrade.getWeightedPercentageGrade();
     	}
     	
     	try {
@@ -86,9 +86,9 @@ public class GradeCalculatorController {
     	
     	courseGrade += 
     			//projectGrade.getWeightedPercentageValue() 
-    				  codingChallengeGrade.getWeightedPercentageValue() +
-    				  (requiredQuizzesGrade.getWeightedPercentageValue() + 
-    				   optionalQuizzesGrade.getWeightedPercentageValue()
+    				  codingChallengeGrade.getWeightedPercentageGrade() +
+    				  (requiredQuizzesGrade.getWeightedPercentageGrade() + 
+    				   optionalQuizzesGrade.getWeightedPercentageGrade()
     				  );
 
     	// Display result of grade calculation to the user
@@ -105,7 +105,7 @@ public class GradeCalculatorController {
     		
     		try {
         		Grade quizGrade = new Grade(textfield.getText(), 10, weightPerQuiz);
-        		averageOfRequiredQuizGrade += quizGrade.getWeightedPercentageValue();
+        		averageOfRequiredQuizGrade += quizGrade.getWeightedPercentageGrade();
         	}catch(InvalidGradeException ige){
     			noErrors = false;
     			System.out.println(noErrors);
@@ -148,20 +148,20 @@ public class GradeCalculatorController {
        	if (optionalQuizTextFields.size() < 6) {
        		for(Double grade : optionalQuizDoubles) {
        			Grade quizGrade = new Grade(grade, 10, weightPerQuiz);
-       			averageOfOptionalQuizGrade += quizGrade.getWeightedPercentageValue();
+       			averageOfOptionalQuizGrade += quizGrade.getWeightedPercentageGrade();
             	}
        	}else if (optionalQuizDoubles.size() == 6){
     		optionalQuizDoubles.remove(Collections.min(optionalQuizDoubles));
     		for(Double grade : optionalQuizDoubles) {
        			Grade quizGrade = new Grade(grade, 10, weightPerQuiz);
-       			averageOfOptionalQuizGrade += quizGrade.getWeightedPercentageValue();
+       			averageOfOptionalQuizGrade += quizGrade.getWeightedPercentageGrade();
             	}
     	}else if(optionalQuizDoubles.size() > 6) {
         	optionalQuizDoubles.remove(Collections.min(optionalQuizDoubles));
         	optionalQuizDoubles.remove(Collections.min(optionalQuizDoubles));
         	for(Double grade : optionalQuizDoubles) {
        			Grade quizGrade = new Grade(grade, 10, weightPerQuiz);
-       			averageOfOptionalQuizGrade += quizGrade.getWeightedPercentageValue();
+       			averageOfOptionalQuizGrade += quizGrade.getWeightedPercentageGrade();
             	}
         }
        	

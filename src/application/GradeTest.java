@@ -9,7 +9,7 @@ public class GradeTest {
 	@Test
 	public void test_constructor_gradeAsDouble() {
 		Grade g = new Grade(12.34, 50, .5);
-		double actualValue = g.getWeightedPercentageValue();
+		double actualValue = g.getWeightedPercentageGrade();
 		double expectedValue = 12.34;
 		assertEquals("Tested constructor with 12.34 as grade, 50 as max value and .5 weight", expectedValue, actualValue, 0.00001);
 	}
@@ -19,7 +19,7 @@ public class GradeTest {
 		Grade g;
 		try {
 			g = new Grade("12.34", 50, .5);
-			double actualValue = g.getWeightedPercentageValue();
+			double actualValue = g.getWeightedPercentageGrade();
 			double expectedValue = 12.34;
 			assertEquals("Tested constructor with 12.34 as grade, 50 as max value and .5 weight", expectedValue, actualValue, 0.00001);
 		} catch (InvalidGradeException e) {
