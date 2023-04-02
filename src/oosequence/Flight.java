@@ -45,20 +45,25 @@ long length() {
 }
 
 public Date getDeparture() {
-	return departure;
+	if(departure != null) {
+		Date copyOfDeparture = (Date) departure.clone();
+		return copyOfDeparture;
+	}else {return null;}
 }
 
 public void setDeparture(Date departureDate) {
 	boolean bothDatesValid = true;
 	
 	if ((departureDate == null || arrival == null) || (departureDate==null && arrival==null)){
-		this.departure = departureDate;
+		if(departureDate != null) {
+			this.departure = (Date) departureDate.clone();
+		}else {this.departure = null;}
 		bothDatesValid = false;
 	}
 	
 	if(bothDatesValid) {
 		if (departureDate.before(arrival)) {
-			departure = departureDate;
+			departure = (Date) departureDate.clone();
 		}
 	}
 }

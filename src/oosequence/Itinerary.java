@@ -18,8 +18,12 @@ public void addFlight(Flight newFlight) {
 	
 	boolean flightAdded = false;
 	boolean overlappingFlight = false;
+	Date copyOfFlightDeparture = (Date) newFlight.getDeparture().clone();
+	Date copyOfFlightArrival = (Date) newFlight.getArrival().clone();
+	Flight copyOfFlight = new Flight(copyOfFlightDeparture, copyOfFlightArrival);
+	
 	if(flights.isEmpty()) {
-		flights.add(newFlight);
+		flights.add(copyOfFlight);
 	}else{
 		for(Flight f : flights) {
 			if ((f.getDeparture().before(newFlight.getDeparture())) 
@@ -37,11 +41,11 @@ public void addFlight(Flight newFlight) {
 			}
 			if(!flightAdded) {
 				if(newFlight.getDeparture().before(flights.get(index).getDeparture())) {
-					flights.add(index, newFlight);
+					flights.add(index, copyOfFlight);
 					flightAdded = true;
 				}else {
 					if (lastIndex) {
-						flights.add(newFlight);
+						flights.add(copyOfFlight);
 						flightAdded = true;
 					}else {index++;}
 				}
@@ -85,5 +89,9 @@ public long getTotalLayover() {
 		
 	}
 	return totalLayover;
+}
+
+public ArrayList<Flight> getFlightList() {
+		return flights;
 }
 }
