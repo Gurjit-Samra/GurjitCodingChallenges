@@ -21,20 +21,53 @@ public class Grade {
 		weight = weightTowardsCourseGrade; 
 	}
 	
+	public Grade(String gradeValue, int maxGradeValue, double weightTowardsCourseGrade) throws InvalidGradeException{
+		try {
+			value = Double.parseDouble(gradeValue);
+			if(value < 0 || value > maxGradeValue){
+				value = 0;
+	    		throw new InvalidGradeException("Grade should be a value between 0 and " + maxGradeValue + " Invalid grade");
+	    		
+	    	}
+		}catch (NullPointerException npe){
+			throw new InvalidGradeException("Please enter a valid numerical value");
+		}catch (NumberFormatException nfe) {
+			
+	    	int decimalCounter = 0;
+	    	for (char c : gradeValue.toCharArray()) {
+	    		if(!(Character.isDigit(c))) {
+	    			if (c == '.') {
+	    				decimalCounter += 1;
+	    				if(decimalCounter > 1) {
+	                		throw new InvalidGradeException("Do not include extra character: " + "'" + c + "'"
+	                				+ " Grade should be a number.") ;
+	    				}
+	    			}else {
+	        			throw new InvalidGradeException("Do not include character: " + "'" + c + "'"
+	            				+ " Grade should be a number.");
+	    			}
+	    		}
+	    	}
+	    }finally {
+		maxValue = maxGradeValue;
+		weight = weightTowardsCourseGrade; 
+		}
+	}
+	
+	
 	/**
 	 * Gives user the weighted percent value
 	 * @return wightedPercentageValue
 	 */
-	double getWeightedPercentageValue() {
+	double getWeightedPercentageGrade() {
 		return value * 100 * weight / maxValue;
 	}
-	
 	/**
 	 * Checks and sets the value variable to a value given by user
 	 * @param valueAsString
 	 * @return errorMessage 
 	 */
-	String setValue(String valueAsString) {
+	/*String setValue(String valueAsString) {
 		String errorMessage = ""; 
 		//Start with assuming no Error
     	// Checking to see if the valueAsString entered by user is a valid double
@@ -66,6 +99,6 @@ public class Grade {
     		value = 0;
     	}
 		return errorMessage;
-	}
+	}*/
 	
 }
